@@ -162,6 +162,11 @@ class AsynchronousValueIterationAgent(ValueIterationAgent):
 
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
+
+        #for each iteration is the state equal to module of state length and i iterations 4%4 = 0,...etc
+        #if state is not terminal state then compute for all actions the qvalue from current state and action
+        #values[state] is equal to max value of values
+
         states = self.mdp.getStates()
         stateLength = len(states)
         for i in range(self.iterations):
