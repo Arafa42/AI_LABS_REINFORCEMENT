@@ -68,7 +68,6 @@ class ValueIterationAgent(ValueEstimationAgent):
             updatedValues = self.values.copy()
 
             for state in self.mdp.getStates():
-                print("state : ", state)
                 if self.mdp.isTerminal(state):
                     continue
 
@@ -90,15 +89,16 @@ class ValueIterationAgent(ValueEstimationAgent):
           value function stored in self.values.
         """
         "*** YOUR CODE HERE ***"
-        qValue = 0
 
         # for all transition states and probabilities from current state and action
         # is the q value equal to cumulative of the probability times
         # the total of the reward of the current state, action and transition states
         # plus the discount factor times the values
+        qValue = 0
 
-        for s, t in self.mdp.getTransitionStatesAndProbs(state, action):
-            qValue += t * (self.mdp.getReward(state, action, s) + self.discount * self.getValue(s))
+        for t in self.mdp.getTransitionStatesAndProbs(state, action):
+            reward = self.mdp.getReward(state, action, t[0])
+            qValue += t[1] * (reward + self.discount * self.values[t[0]])
         return qValue
 
     def computeActionFromValues(self, state):
@@ -162,6 +162,7 @@ class AsynchronousValueIterationAgent(ValueIterationAgent):
 
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
+        return
 
 
 class PrioritizedSweepingValueIterationAgent(AsynchronousValueIterationAgent):
