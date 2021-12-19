@@ -199,3 +199,43 @@ class PrioritizedSweepingValueIterationAgent(AsynchronousValueIterationAgent):
 
     def runValueIteration(self):
         "*** YOUR CODE HERE ***"
+        priorQueue = util.PriorityQueue()
+        predecessors = {}
+        for state in self.mdp.getStates():
+            if not self.mdp.isTerminal(state):
+                for action in self.mdp.getPossibleActions(state):
+                    for nextState, prob in self.mdp.getTransitionStatesAndProbs(state, action):
+                        if nextState in predecessors:
+                            predecessors[nextState].add(state)
+                        else:
+                            predecessors[nextState] = {state}
+
+        for state in self.mdp.getStates():
+            if not self.mdp.isTerminal(state):
+                values = []
+                for action in self.mdp.getPossibleActions(state):
+                    q_value = self.computeQValueFromValues(state, action)
+                    values.append(q_value)
+                diff = abs(max(values) - self.values[state])
+                priorQueue.update(state, - diff)
+
+        for i in range(self.iterations):
+            if priorQueue.isEmpty():
+                break
+            state_s = priorQueue.pop()
+            if not self.mdp.isTerminal(state_s):
+                values = []
+                for action in self.mdp.getPossibleActions(state_s):
+                    q_value = self.computeQValueFromValues(state_s, action)
+                    values.append(q_value)
+                self.values[state_s] = max(values)
+
+            for p in predecessors[state_s]:
+                if not self.mdp.isTerminal(p):
+                    values = []
+                    for action in self.mdp.getPossibleActions(p):
+                        q_value = self.computeQValueFromValues(p, action)
+                        values.append(q_value)
+                    diff = abs(max(values) - self.values[p])
+                    if diff > self.theta:
+                        priorQueue.update(p, -diff)
