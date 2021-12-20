@@ -120,14 +120,14 @@ class QLearningAgent(ReinforcementAgent):
           it will be called on your behalf
         """
         "*** YOUR CODE HERE ***"
-        old_q_value = self.getQValue(state, action)
-        old_part = (1 - self.alpha) * old_q_value
+        oldQValue = self.getQValue(state, action)
+        oldPart = (1 - self.alpha) * oldQValue
         reward_part = self.alpha * reward
         if not nextState:
-            self.qValues[(state, action)] = old_part + reward_part
+            self.qValues[(state, action)] = oldPart + reward_part
         else:
             nextState_part = self.alpha * self.discount * self.getValue(nextState)
-            self.qValues[(state, action)] = old_part + reward_part + nextState_part
+            self.qValues[(state, action)] = oldPart + reward_part + nextState_part
 
 
     def getPolicy(self, state):
