@@ -36,14 +36,14 @@ def question3b():
     #close exit avoiding the cliff
     answerDiscount = .3
     answerNoise = .1
-    answerLivingReward = 0
+    answerLivingReward = .1
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
 def question3c():
     #distant exit risking the cliff
     answerDiscount = .9
-    answerNoise = .01
+    answerNoise = 0
     answerLivingReward = 0
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
@@ -57,8 +57,9 @@ def question3d():
     # If not possible, return 'NOT POSSIBLE'
 
 def question3e():
-    answerDiscount = 1
-    answerNoise = .2
+    #avoid both
+    answerDiscount = 0
+    answerNoise = 0
     answerLivingReward = 11
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
